@@ -1,20 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FieldSpawner : MonoBehaviour
 {
-    [SerializeField] private int _fieldX = 5;
-    [SerializeField] private int _fieldY = 5;
-
     [SerializeField] private int[,] _field;
-    [SerializeField] private Transform _startPoint;
-    [SerializeField] private float _xOffset;
-    [SerializeField] private float _yOffset;
 
     [SerializeField] private GameObject[] _blockTypes;
 
     [SerializeField] private GameManager _gm;
+
+    [SerializeField]private BrickGridCalculation _brickGrid;
 
     private JsonSaver _fieldSaver = new JsonSaver();
 
@@ -39,29 +33,33 @@ public class FieldSpawner : MonoBehaviour
     // Update is called once per frame
     private void Start()
     {
-        _field = new int[_fieldX, _fieldY];
+        _field = new int[(int)_brickGrid.Grid.x, (int)_brickGrid.Grid.y];
+        _brickGrid.CalcSpriteScale();
         FieldFiller();
         FieldBlockSpawner();
     }
     private void FieldFiller()
     {
-        for (int i = 0; i < _fieldX; i++)
+        for (int i = 0; i < (int)_brickGrid.Grid.x; i++)
         {
-            for (int j = 0; j < _fieldY; j++)
+            for (int j = 0; j < (int)_brickGrid.Grid.y; j++)
             {
                 _field[i, j] = Random.Range(1, _blockTypes.Length);
             }
         }
     }
 
-    private void FieldBlockSpawner()
+    public void FieldBlockSpawner()
     {
-        for (int i = 0; i < _fieldX; i++)
+        for (int i = 0; i < (int)_brickGrid.Grid.x; i++)
         {
-            for (int j = 0; j < _fieldY; j++)
+            for (int j = 0; j < (int)_brickGrid.Grid.y; j++)
             {
-                Vector2 spawnPoint = new Vector2(_startPoint.position.x + _xOffset * i, _startPoint.position.y + _yOffset * j);
-                GameObject block = Instantiate(_blockTypes[_field[i, j]], spawnPoint, _startPoint.rotation);
+                Debug.Log($"{_brickGrid.StartPoint}");
+                Vector3 scale = new Vector3(_brickGrid.Scale, _brickGrid.Scale, _brickGrid.Scale);
+                Vector2 spawnPoint = new Vector2(_brickGrid.StartPoint.x + _brickGrid._xStep * i, _brickGrid.StartPoint.y + _brickGrid._yStep * j);
+                GameObject block = Instantiate(_blockTypes[_field[i, j]], spawnPoint, Quaternion.identity);
+                block.transform.localScale = scale;
                 block.transform.parent = this.transform;
                 block.GetComponent<Block>().FieldSpawner = this;
                 blocksCount += 1;
