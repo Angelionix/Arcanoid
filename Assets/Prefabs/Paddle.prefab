@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  rigidbody: {fileID: 107248073861166286}
+  rigidbodyPaddle: {fileID: 107248073861166286}
 --- !u!50 &107248073861166286
 Rigidbody2D:
   serializedVersion: 4
@@ -197,6 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6618a82dc758c840befa58f5b3ef146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mover: {fileID: 107248073861166288}
 --- !u!1 &107248074295834301
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,3 +337,4 @@ MonoBehaviour:
   _sp: {fileID: 107248074295834304}
   _ballRigid: {fileID: 107248074295834302}
   _paddleRigid: {fileID: 107248073861166286}
+  _gm: {fileID: 0}

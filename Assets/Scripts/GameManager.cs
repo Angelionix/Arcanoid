@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _losePanel;
     [SerializeField] private GameObject _winPanel;
 
+    [SerializeField] private UiUpdater _uiUpdater;
+    [SerializeField] private FieldSpawner _fs;
+    [SerializeField] private Baller _ball;
     private Scene scene;
 
     public int ScneNumber
@@ -19,20 +22,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public delegate void ScoreChanged(int value);
-    public static ScoreChanged scoreChanged;
-
-    public delegate void LivesChanged(int value);
-    public static LivesChanged livesChanged;
-
-    public delegate void LevelRestarted();
-    public static LevelRestarted levelRestarted;
     public int Score
     {
         set
         {
             _score += value;
-            scoreChanged(_score);
+            _uiUpdater.ChangeScore(_score);
         }
     }
 
@@ -45,17 +40,16 @@ public class GameManager : MonoBehaviour
         {
             _score = 0;
             _lives = 3;
-            scoreChanged(_score);
-            livesChanged(_lives);
-            Baller.deathBall += ChangeLives;
+            _uiUpdater.ChangeScore(_score);
+            _uiUpdater.ChangeLives(_lives);
             FieldSpawner.blocksOver += LoadNextLevel;
         }
     }
 
-    private void ChangeLives()
+    public void ChangeLives()
     {
         _lives -= 1;
-        livesChanged(_lives);
+        _uiUpdater.ChangeLives(_lives);
         if (_lives <= 0)
         {
             Time.timeScale = 0f;
@@ -78,6 +72,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel(int index)
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(index);
     }
 
@@ -85,11 +80,12 @@ public class GameManager : MonoBehaviour
     {
         _lives = 3;
         _score = 0;
-        livesChanged(_lives);
-        scoreChanged(_score);
+        _uiUpdater.ChangeScore(_score);
+        _uiUpdater.ChangeLives(_lives);
         _losePanel.SetActive(false);
         _winPanel.SetActive(false);
-        levelRestarted();
+        _fs.FieldReActivate();
+        _ball.BallInitialisator();
         Time.timeScale = 1;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
     [SerializeField] private int _health = 2;
-    [SerializeField] private int _value = 5;
+
     private FieldSpawner _fieldSpawner;
 
     public FieldSpawner FieldSpawner

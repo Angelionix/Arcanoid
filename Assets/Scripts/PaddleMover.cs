@@ -3,14 +3,14 @@ using UnityEngine;
 public class PaddleMover : MonoBehaviour
 {
     [SerializeField]private float _speed;
-    [SerializeField]private Rigidbody2D rigidbody;
+    [SerializeField]private Rigidbody2D rigidbodyPaddle;
 
     private void Awake()
     {
-        InputKeyboard.moveButtonpres += PaddleStrafe;
+        //rigidbodyPaddle = this.GetComponent<Rigidbody2D>();
     }
     public void PaddleStrafe(Vector2 dir)
     {
-        rigidbody.velocity = dir * _speed;
+        rigidbodyPaddle.velocity = dir * _speed;
     }
 }

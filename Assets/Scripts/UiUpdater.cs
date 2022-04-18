@@ -1,4 +1,5 @@
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class UiUpdater : MonoBehaviour
@@ -8,8 +9,11 @@ public class UiUpdater : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.scoreChanged += ChangeScore;
-        GameManager.livesChanged += ChangeLives;
+        if (SceneManager.GetActiveScene().buildIndex > 0)
+        {
+            _scoreField = GameObject.Find("ScoreValue").GetComponent<Text>();
+            _lifeField = GameObject.Find("LiveValue").GetComponent<Text>();
+        }
     }
 
     public void ChangeScore(int value)

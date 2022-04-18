@@ -9,17 +9,10 @@ public class Baller : MonoBehaviour
     [SerializeField] private Rigidbody2D _ballRigid;
     [SerializeField] private Rigidbody2D _paddleRigid;
 
+    [SerializeField] private GameManager _gm;
+
     private bool _ballLunched = false;
 
-    public delegate void Death();
-    public static Death deathBall;
-    // Start is called before the first frame update
-    private void Awake ()
-    {
-        InputKeyboard.ballLunche += BallStarter;
-    }
-
-    // Update is called once per frame
     void FixedUpdate()
     {
          _ballRigid.velocity = _ballRigid.velocity.normalized *_speed;
@@ -30,7 +23,7 @@ public class Baller : MonoBehaviour
         if (collision.gameObject.GetComponent<BallDeath>() != null)
         {
             BallInitialisator();
-            deathBall();
+            _gm.ChangeLives();
         }
     }
 
@@ -47,7 +40,7 @@ public class Baller : MonoBehaviour
         }
     }
 
-    private void BallInitialisator()
+    public void BallInitialisator()
     {
         _ballLunched = false;
         _sp.enabled = false;

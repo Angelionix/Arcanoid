@@ -45,7 +45,6 @@ public class FieldSpawner : MonoBehaviour
         _fieldObj = new GameObject[_fieldX, _fieldY];
         FieldFiller();
         FieldBlockSpawner();
-        GameManager.levelRestarted += FieldReActivate;
     }
     private void FieldFiller()
     {
@@ -74,7 +73,7 @@ public class FieldSpawner : MonoBehaviour
         }
     }
 
-    private void FieldReActivate()
+    public void FieldReActivate()
     {
         blocksCount = 0;
         foreach (GameObject block in _fieldObj)

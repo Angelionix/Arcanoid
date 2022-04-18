@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &35502517 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 107248074295834306, guid: 132f7482afa9b464dbca47a8d62de536, type: 3}
+  m_PrefabInstance: {fileID: 107248073715119232}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0e1f10a62941ea408466239b8776450, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &113499131
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -175,6 +186,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 565905172521379301, guid: f9c33907ef17cb646af763990dd3796d, type: 3}
+      propertyPath: _fs
+      value: 
+      objectReference: {fileID: 796130954}
+    - target: {fileID: 565905172521379301, guid: f9c33907ef17cb646af763990dd3796d, type: 3}
+      propertyPath: _ball
+      value: 
+      objectReference: {fileID: 35502517}
+    - target: {fileID: 565905172521379301, guid: f9c33907ef17cb646af763990dd3796d, type: 3}
       propertyPath: _winPanel
       value: 
       objectReference: {fileID: 1337239849}
@@ -182,6 +201,10 @@ PrefabInstance:
       propertyPath: _losePanel
       value: 
       objectReference: {fileID: 214575570}
+    - target: {fileID: 565905172521379301, guid: f9c33907ef17cb646af763990dd3796d, type: 3}
+      propertyPath: _uiUpdater
+      value: 
+      objectReference: {fileID: 201658483}
     - target: {fileID: 565905172521379302, guid: f9c33907ef17cb646af763990dd3796d, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -196,6 +219,17 @@ PrefabInstance:
       objectReference: {fileID: 2081763173}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9c33907ef17cb646af763990dd3796d, type: 3}
+--- !u!114 &201658483 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 565905172521379322, guid: f9c33907ef17cb646af763990dd3796d, type: 3}
+  m_PrefabInstance: {fileID: 113499131}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e812c2df36d07a849a6e276356257868, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &214575570 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6367234176443832360, guid: 972046209c19fa841be2a7c06840357f, type: 3}
@@ -445,7 +479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7549474c6f09fc4a9e10fd9b0ac6111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fieldX: 8
+  _fieldX: 3
   _fieldY: 3
   _startPoint: {fileID: 235991272}
   _xOffset: 0.5
@@ -618,6 +652,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 107248073861166291, guid: 132f7482afa9b464dbca47a8d62de536, type: 3}
+      propertyPath: _ball
+      value: 
+      objectReference: {fileID: 35502517}
+    - target: {fileID: 107248074295834306, guid: 132f7482afa9b464dbca47a8d62de536, type: 3}
+      propertyPath: _gm
+      value: 
+      objectReference: {fileID: 1474709157}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 132f7482afa9b464dbca47a8d62de536, type: 3}
 --- !u!1001 &2046838843521319522
