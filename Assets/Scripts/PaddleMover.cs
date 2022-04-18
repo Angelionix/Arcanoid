@@ -7,10 +7,16 @@ public class PaddleMover : MonoBehaviour
 
     private void Awake()
     {
-        //rigidbodyPaddle = this.GetComponent<Rigidbody2D>();
+        InputKeyboard.moving += PaddleStrafe;
     }
+
     public void PaddleStrafe(Vector2 dir)
     {
         rigidbodyPaddle.velocity = dir * _speed;
+    }
+
+    private void OnDisable()
+    {
+        InputKeyboard.moving -= PaddleStrafe;
     }
 }

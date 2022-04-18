@@ -3,15 +3,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private int _score = 0;
-    [SerializeField] private int _lives = 3;
+    [SerializeField] private int _score;
+    [SerializeField] private int _lives;
 
-    [SerializeField] private GameObject _losePanel;
-    [SerializeField] private GameObject _winPanel;
-
-    [SerializeField] private UiUpdater _uiUpdater;
-    [SerializeField] private FieldSpawner _fs;
-    [SerializeField] private Baller _ball;
     private Scene scene;
 
     public int ScneNumber
@@ -27,33 +21,49 @@ public class GameManager : MonoBehaviour
         set
         {
             _score += value;
-            _uiUpdater.ChangeScore(_score);
+            scoreChanged(_score);
         }
     }
 
-    void Awake()
+    public delegate void ScoreChanged(int value);
+    public static ScoreChanged scoreChanged;
+
+    public delegate void LivesChanged(int value);
+    public static LivesChanged livesChanged;
+
+    public delegate void Losing();
+    public static Losing losing;
+
+    public delegate void Winning();
+    public static Winning winning;
+
+    private void Awake()
     {
         scene = SceneManager.GetActiveScene();
-        _losePanel.SetActive(false);
-        _winPanel.SetActive(false);
         if (scene.buildIndex > 0)
         {
-            _score = 0;
-            _lives = 3;
-            _uiUpdater.ChangeScore(_score);
-            _uiUpdater.ChangeLives(_lives);
             FieldSpawner.blocksOver += LoadNextLevel;
+            Baller.ballDeath += ChangeLives;
         }
     }
 
-    public void ChangeLives()
+    private void Start()
     {
-        _lives -= 1;
-        _uiUpdater.ChangeLives(_lives);
+        if (scene.buildIndex > 0)
+        {
+            livesChanged(_lives);
+            scoreChanged(_score);
+        }
+    }
+
+    public void ChangeLives(int value)
+    {
+        _lives += value;
+        livesChanged(_lives);
         if (_lives <= 0)
         {
             Time.timeScale = 0f;
-            _losePanel.SetActive(true);
+            losing();
         }
     }
 
@@ -66,7 +76,7 @@ public class GameManager : MonoBehaviour
         else 
         {
             Time.timeScale = 0f;
-            _winPanel.SetActive(true);
+            winning();
         }
     }
 
@@ -80,12 +90,13 @@ public class GameManager : MonoBehaviour
     {
         _lives = 3;
         _score = 0;
-        _uiUpdater.ChangeScore(_score);
-        _uiUpdater.ChangeLives(_lives);
-        _losePanel.SetActive(false);
-        _winPanel.SetActive(false);
-        _fs.FieldReActivate();
-        _ball.BallInitialisator();
+        SceneManager.LoadScene(scene.buildIndex);
         Time.timeScale = 1;
+    }
+
+    private void OnDisable()
+    {
+        Baller.ballDeath -= ChangeLives;
+        FieldSpawner.blocksOver -= LoadNextLevel;
     }
 }

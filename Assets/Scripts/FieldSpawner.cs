@@ -16,8 +16,6 @@ public class FieldSpawner : MonoBehaviour
 
     [SerializeField] private GameManager _gm;
 
-    private GameObject[,] _fieldObj;
-
     private JsonSaver _fieldSaver = new JsonSaver();
 
     private int blocksCount = 0;
@@ -42,7 +40,6 @@ public class FieldSpawner : MonoBehaviour
     private void Start()
     {
         _field = new int[_fieldX, _fieldY];
-        _fieldObj = new GameObject[_fieldX, _fieldY];
         FieldFiller();
         FieldBlockSpawner();
     }
@@ -65,24 +62,12 @@ public class FieldSpawner : MonoBehaviour
             {
                 Vector2 spawnPoint = new Vector2(_startPoint.position.x + _xOffset * i, _startPoint.position.y + _yOffset * j);
                 GameObject block = Instantiate(_blockTypes[_field[i, j]], spawnPoint, _startPoint.rotation);
-                _fieldObj[i, j] = block;
                 block.transform.parent = this.transform;
                 block.GetComponent<Block>().FieldSpawner = this;
                 blocksCount += 1;
             }
         }
     }
-
-    public void FieldReActivate()
-    {
-        blocksCount = 0;
-        foreach (GameObject block in _fieldObj)
-        {
-            block.SetActive(true);
-            blocksCount += 1;
-        }
-    }
-
     public void SaveFieldToFile()
     {
         _fieldSaver.SaveToFile(_field, _gm.ScneNumber);

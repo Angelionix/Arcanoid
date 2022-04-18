@@ -13,6 +13,14 @@ public class Baller : MonoBehaviour
 
     private bool _ballLunched = false;
 
+    public delegate void BallDie(int value);
+    public static BallDie ballDeath;
+
+    private void Awake()
+    {
+        InputKeyboard.ballLunching += BallStarter;
+    }
+
     void FixedUpdate()
     {
          _ballRigid.velocity = _ballRigid.velocity.normalized *_speed;
@@ -22,8 +30,8 @@ public class Baller : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<BallDeath>() != null)
         {
+            ballDeath(-1);
             BallInitialisator();
-            _gm.ChangeLives();
         }
     }
 
@@ -49,5 +57,10 @@ public class Baller : MonoBehaviour
         this.transform.position = _posOnPaddle.position;
         this.transform.parent = _posOnPaddle.transform;
         _sp.enabled = true;
+    }
+
+    private void OnDisable()
+    {
+        InputKeyboard.ballLunching -= BallStarter;
     }
 }
